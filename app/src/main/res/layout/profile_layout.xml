@@ -13,31 +13,66 @@
         android:layout_marginEnd="22dp"
         android:text="Edit" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/firstL"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="15dp">
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="First" />
 
-        <TextView
-            android:id="@+id/FirstTF"
-            android:layout_width="113dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="First" />
+    <TextView
+        android:id="@+id/middleL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/button"
+        android:paddingTop="10dp"
+        android:text="M.I." />
 
-        <TextView
-            android:id="@+id/LastTF"
-            android:layout_width="148dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Last" />
+    <TextView
+        android:id="@+id/lastL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/firstL"
+        android:layout_below="@+id/firstL"
+        android:layout_marginTop="50dp"
+        android:text="Last" />
 
-        <TextView
-            android:id="@+id/MiddleTF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="MI" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lastL"
+        android:layout_below="@+id/firstL"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/middleTF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/middleL"
+        android:layout_below="@+id/middleL"
+        android:width="25dp"
+        android:autoText="false"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:maxLength="1"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/lastTF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lastL"
+        android:layout_below="@+id/lastL"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
 </RelativeLayout>
