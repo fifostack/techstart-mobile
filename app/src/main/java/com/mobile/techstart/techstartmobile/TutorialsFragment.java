@@ -1,6 +1,5 @@
 package com.mobile.techstart.techstartmobile;
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -16,10 +15,9 @@ import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayer.OnInitializedListener;
 import com.google.android.youtube.player.YouTubePlayer.Provider;
 import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+
 
 /**
  * Created by Lucas on 2/2/2018.
@@ -36,6 +34,8 @@ public class TutorialsFragment extends Fragment implements YouTubePlayer.OnIniti
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.tutorials_layout, container, false);
+
+
 
         vButton1 = myView.findViewById(R.id.videoButton1);
         vButton1.setOnClickListener(this);

@@ -11,11 +11,17 @@
         android:layout_alignParentTop="true"
         android:text="Messages Page" />
 
-    <ExpandableListView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp"
-        android:paddingTop="40dp" />
+        android:orientation="vertical">
+
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:paddingTop="40dp" />
+    </LinearLayout>
 
 </RelativeLayout>
