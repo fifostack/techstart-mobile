@@ -1,12 +1,13 @@
 package com.mobile.techstart.techstartmobile;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,14 +15,39 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import static com.mobile.techstart.techstartmobile.R.id.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import static com.mobile.techstart.techstartmobile.R.id.action_advanced;
+import static com.mobile.techstart.techstartmobile.R.id.action_logout;
+import static com.mobile.techstart.techstartmobile.R.id.drawer_layout;
+import static com.mobile.techstart.techstartmobile.R.id.nav_about_layout;
+import static com.mobile.techstart.techstartmobile.R.id.nav_home;
+import static com.mobile.techstart.techstartmobile.R.id.nav_messages_layout;
+import static com.mobile.techstart.techstartmobile.R.id.nav_profile;
+import static com.mobile.techstart.techstartmobile.R.id.nav_tutorials_layout;
+import static com.mobile.techstart.techstartmobile.R.id.nav_view;
 
 public class MainPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
+    GoogleSignInAccount account;
+    Intent logout;
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+        logout.putExtra("NEED_LOGIN", false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +56,7 @@ public class MainPage extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        account = GoogleSignIn.getLastSignedInAccount(this);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +66,7 @@ public class MainPage extends AppCompatActivity
             }
         });*/
 
+        //set up navigation drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -48,6 +75,36 @@ public class MainPage extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+
+
+        //initialize profile info on nav drawer
+        TextView user = headerView.findViewById(R.id.usernameText);
+        TextView uEmail = headerView.findViewById(R.id.emailText);
+        ImageView profileImage = headerView.findViewById(R.id.userImageView);
+
+
+        user.setText(account.getDisplayName());
+        uEmail.setText(account.getEmail());
+        Bitmap iconBMP = null;
+        try {
+            Uri imageURI = account.getPhotoUrl();
+            if(imageURI != null)
+                iconBMP = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
+        }
+        catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            profileImage.setImageBitmap(iconBMP);
+        }
+
+        logout = new Intent(this, LoginActivity.class);
+
+
     }
 
     @Override
@@ -75,12 +132,16 @@ public class MainPage extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == action_settings) {
+        if (id == action_logout) {
 
             View view = findViewById(drawer_layout);
-            Snackbar.make(view,"What's the matter little fella?", Snackbar.LENGTH_LONG )
-            .setAction("Action", null).show();
 
+            logout.putExtra("NEED_LOGIN", true);
+            startActivity(logout);
+            finish();
+            /*Snackbar.make(view,"What's the matter little fella?", Snackbar.LENGTH_LONG )
+            .setAction("Action", null).show();
+            */
             return true;
         }
         else if (id == action_advanced) {
@@ -134,4 +195,5 @@ public class MainPage extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

@@ -4,8 +4,12 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- Account Strings -->
+    <string name="user_name">Android Studio</string>
+    <string name="user_email">android.studio@android.net</string>
+
     <!-- Settings Menu -->
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Log Out</string>
     <string name="advanced_settings">Advanced</string>
 
     <!-- YouTube Strings -->

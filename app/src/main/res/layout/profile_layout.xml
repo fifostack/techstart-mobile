@@ -4,7 +4,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/toggleB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/button"
+        android:layout_alignStart="@+id/toggleB"
         android:paddingTop="10dp"
         android:text="M.I." />
 
@@ -39,16 +39,33 @@
         android:layout_marginTop="50dp"
         android:text="Last" />
 
+    <TextView
+        android:id="@+id/emailL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/lastTF"
+        android:layout_below="@+id/lastTF"
+        android:layout_marginTop="5dp"
+        android:text="Email Address" />
+
+    <TextView
+        android:id="@+id/schoolL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/emailTF"
+        android:layout_below="@+id/emailTF"
+        android:layout_marginTop="5sp"
+        android:text="High School" />
+
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/firstTF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/lastL"
         android:layout_below="@+id/firstL"
-        android:editable="false"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:inputType="none|textPersonName"
+        android:hint="John"/>
 
     <EditText
         android:id="@+id/middleTF"
@@ -57,12 +74,10 @@
         android:layout_alignStart="@+id/middleL"
         android:layout_below="@+id/middleL"
         android:width="25dp"
-        android:autoText="false"
-        android:editable="false"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="none|textPersonName"
         android:maxLength="1"
-        android:text="Name" />
+        android:hint="X"/>
 
     <EditText
         android:id="@+id/lastTF"
@@ -70,9 +85,30 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/lastL"
         android:layout_below="@+id/lastL"
-        android:editable="false"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:inputType="none|textPersonName"
+        android:hint="Doe"/>
+
+    <EditText
+        android:id="@+id/emailTF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/emailL"
+        android:layout_below="@+id/emailL"
+        android:width="300sp"
+        android:ems="10"
+        android:inputType="none|textEmailAddress"
+        android:hint="example@gmail.com"/>
+
+    <EditText
+        android:id="@+id/schoolTF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/schoolL"
+        android:layout_below="@+id/schoolL"
+        android:width="300sp"
+        android:ems="10"
+        android:hint="Example High School"
+        android:inputType="none|textPersonName" />
 
 </RelativeLayout>
