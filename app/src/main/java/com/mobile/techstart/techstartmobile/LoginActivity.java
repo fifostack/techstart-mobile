@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     @Override
     protected void onStart() { //whenever this page is loaded
         super.onStart();
+
+        //startActivity(loadMain);
         signedIn = false;
 
         needLogin = getIntent().getBooleanExtra("NEED_LOGIN",false);
@@ -99,20 +101,23 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d(TAG, "handleSignInResult: ON ACTIVITY RESULT");
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
+            Log.d(TAG, "handleSignInResult: IN IF REQUEST CODE IS SIGN IN");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        Log.d(TAG, "handleSignInResult: BEFORE THE TRY");
         try {
             account = completedTask.getResult(ApiException.class);
 
+            
             // Signed in successfully, load the main page
             // TODO: send google account over to MainPage to update the account-based GUI elements
             startActivity(loadMain);

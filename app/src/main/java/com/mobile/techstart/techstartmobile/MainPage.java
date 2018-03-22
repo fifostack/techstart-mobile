@@ -45,6 +45,7 @@ public class MainPage extends AppCompatActivity
     @Override
     protected void onStart() {
 
+
         super.onStart();
         logout.putExtra("NEED_LOGIN", false);
     }

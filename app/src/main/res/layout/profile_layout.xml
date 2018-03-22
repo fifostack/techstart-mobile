@@ -22,15 +22,6 @@
         android:text="First" />
 
     <TextView
-        android:id="@+id/middleL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/toggleB"
-        android:paddingTop="10dp"
-        android:text="M.I." />
-
-    <TextView
         android:id="@+id/lastL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,10 +43,11 @@
         android:id="@+id/schoolL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/emailL"
         android:layout_alignStart="@+id/emailTF"
         android:layout_below="@+id/emailTF"
         android:layout_marginTop="5sp"
-        android:text="High School" />
+        android:text="Counselor ID" />
 
     <EditText
         android:id="@+id/firstTF"
@@ -66,18 +58,6 @@
         android:ems="10"
         android:inputType="none|textPersonName"
         android:hint="John"/>
-
-    <EditText
-        android:id="@+id/middleTF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/middleL"
-        android:layout_below="@+id/middleL"
-        android:width="25dp"
-        android:ems="10"
-        android:inputType="none|textPersonName"
-        android:maxLength="1"
-        android:hint="X"/>
 
     <EditText
         android:id="@+id/lastTF"
@@ -108,7 +88,7 @@
         android:layout_below="@+id/schoolL"
         android:width="300sp"
         android:ems="10"
-        android:hint="Example High School"
+        android:hint="Ex; 04"
         android:inputType="none|textPersonName" />
 
 </RelativeLayout>

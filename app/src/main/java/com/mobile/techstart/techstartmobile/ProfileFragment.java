@@ -17,6 +17,10 @@ import android.widget.EditText;
 public class ProfileFragment extends Fragment {
 
     View myView;
+
+    dbManager db;
+    String[] sInfo;
+
     private EditText firstName, lastName, middleName, school, email;
     private Button toggleModeB;
     private boolean mode; //true if in edit mode
@@ -27,7 +31,7 @@ public class ProfileFragment extends Fragment {
         myView = inflater.inflate(R.layout.profile_layout, container, false);
 
         firstName = myView.findViewById(R.id.firstTF);
-        middleName = myView.findViewById(R.id.middleTF);
+        //middleName = myView.findViewById(R.id.middleTF);
         lastName = myView.findViewById(R.id.lastTF);
         email = myView.findViewById(R.id.emailTF);
         school = myView.findViewById(R.id.schoolTF);
@@ -39,9 +43,9 @@ public class ProfileFragment extends Fragment {
         firstName.setFocusable(false);
         firstName.setFocusableInTouchMode(false);
         firstName.setClickable(false);
-        middleName.setFocusable(false);
-        middleName.setFocusableInTouchMode(false);
-        middleName.setClickable(false);
+        //middleName.setFocusable(false);
+        //middleName.setFocusableInTouchMode(false);
+        //middleName.setClickable(false);
         lastName.setFocusable(false);
         lastName.setFocusableInTouchMode(false);
         lastName.setClickable(false);
@@ -70,9 +74,9 @@ public class ProfileFragment extends Fragment {
             firstName.setFocusable(true);
             firstName.setFocusableInTouchMode(true);
             firstName.setClickable(true);
-            middleName.setFocusable(true);
-            middleName.setFocusableInTouchMode(true);
-            middleName.setClickable(true);
+            //middleName.setFocusable(true);
+            //middleName.setFocusableInTouchMode(true);
+           // middleName.setClickable(true);
             lastName.setFocusable(true);
             lastName.setFocusableInTouchMode(true);
             lastName.setClickable(true);
@@ -92,9 +96,9 @@ public class ProfileFragment extends Fragment {
             firstName.setFocusable(false);
             firstName.setFocusableInTouchMode(false);
             firstName.setClickable(false);
-            middleName.setFocusable(false);
-            middleName.setFocusableInTouchMode(false);
-            middleName.setClickable(false);
+            //middleName.setFocusable(false);
+           // middleName.setFocusableInTouchMode(false);
+            //middleName.setClickable(false);
             lastName.setFocusable(false);
             lastName.setFocusableInTouchMode(false);
             lastName.setClickable(false);
@@ -105,14 +109,32 @@ public class ProfileFragment extends Fragment {
             school.setFocusableInTouchMode(false);
             school.setClickable(false);
 
-
+            db = new dbManager(); //establish database connection
             // TODO: after locking, send data to database
+            if(formCompleted())
+            {
+                sInfo = new String[] {lastName.getText().toString(), firstName.getText().toString(),email.getText().toString(),school.getText().toString()};
+                db.submit(sInfo);
+            }
+
+            db.close();
+
 
             toggleModeB.setText("Edit");
             //mode = true;
         }
 
         mode = !mode;
+    }
+
+    private boolean formCompleted()
+    {
+        if(firstName.getText().length() < 1 || lastName.getText().length() < 1)
+            return false;
+        if(email.getText().length() < 1 || school.getText().length() < 1)
+            return false;
+
+        return true;
     }
 
 
