@@ -19,9 +19,9 @@
         android:id="@+id/imageView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="120sp"
-        android:paddingTop="120sp"
-        app:srcCompat="@android:drawable/star_big_off" />
+        android:paddingBottom="0dp"
+        android:paddingTop="20dp"
+        app:srcCompat="@drawable/techstart_logo" />
 
     <EditText
         android:id="@+id/sessionET"
@@ -31,7 +31,7 @@
         android:layout_marginRight="90sp"
         android:layout_marginTop="30sp"
         android:ems="10"
-        android:hint=""
+        android:hint="Session ID"
         android:inputType="textCapCharacters"
         android:maxLength="8"
         android:textAlignment="center"

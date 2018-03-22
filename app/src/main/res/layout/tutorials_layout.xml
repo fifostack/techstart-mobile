@@ -26,20 +26,20 @@
                 android:id="@+id/videoButton1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Video1" />
+                android:text="Test Video" />
 
             <Button
                 android:id="@+id/videoButton2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Video2" />
+                android:text="Seth Everman" />
 
 
             <Button
                 android:id="@+id/videoButton3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Video3" />
+                android:text="Video 3" />
 
         </LinearLayout>
     </ScrollView>

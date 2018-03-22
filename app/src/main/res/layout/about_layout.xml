@@ -11,7 +11,8 @@
     <ImageView
         android:id="@+id/aboutImage"
         android:layout_width="match_parent"
-        android:layout_height="230sp" />
+        android:layout_height="230sp"
+        app:srcCompat="@drawable/carter_hall" />
 
     <TextView
         android:id="@+id/textView"
@@ -36,5 +37,5 @@
         android:ems="10"
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
-        android:text="TechStart Mobile is one component in the TechStart system. This is a senior project for the 2017-18 acedemic year.\n\n Version 0.1" />
+        android:text="TechStart Mobile is one component in the TechStart system. This is a senior project for the 2017-18 acedemic year.\n\n Created By:\n Lucas Darnell and Jared Miller \n\n Version 0.1" />
 </RelativeLayout>

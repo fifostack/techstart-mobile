@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class MessagesFragment extends Fragment {
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listHash;
+    private SearchView search;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class MessagesFragment extends Fragment {
     private void initData() {
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
+
 
         /*
             // TODO: grab messages from the DB and populate the lists
@@ -54,18 +57,16 @@ public class MessagesFragment extends Fragment {
          */
 
         //begin placeholder list values
-        listDataHeader.add("Exampleitem1");
-        listDataHeader.add("Exampleitem2");
-        listDataHeader.add("Exampleitem3");
-        listDataHeader.add("Exampleitem4");
+        listDataHeader.add("Important Dates");
+        listDataHeader.add("Notice to Students");
+        listDataHeader.add("Message 3");
+        listDataHeader.add("Message 4");
 
         List<String> exampleitem1 = new ArrayList<>();
-        exampleitem1.add("This is example item 1.");
+        exampleitem1.add("Monday \nTuesday \nWednesday");
 
         List<String> exampleitem2 = new ArrayList<>();
-        exampleitem2.add("This is example item 2.");
-        exampleitem2.add("Hot dang.");
-        exampleitem2.add("This is fun stuff.");
+        exampleitem2.add("The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start.");
 
         listHash.put(listDataHeader.get(0),exampleitem1);
         listHash.put(listDataHeader.get(1),exampleitem2);
@@ -81,6 +82,7 @@ public class MessagesFragment extends Fragment {
         listView = myView.findViewById(R.id.expListView);
         listAdapter = new ExpandableListAdapter(this.getActivity(),listDataHeader,listHash);
         listView.setAdapter(listAdapter);
+        search = myView.findViewById(R.id.searchView);
 
         return myView;
     }

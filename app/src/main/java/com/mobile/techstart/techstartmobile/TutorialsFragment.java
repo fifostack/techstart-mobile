@@ -26,7 +26,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 public class TutorialsFragment extends Fragment implements YouTubePlayer.OnInitializedListener, View.OnClickListener {
 
     View myView;
-    private static String video_id = "dIe9Zty-sw8";
+    private static String video_id = "C0DPdy98e4c";
     private Button vButton1, vButton2, vButton3;
     private YouTubePlayer ytPlayer;
 
@@ -79,13 +79,13 @@ public class TutorialsFragment extends Fragment implements YouTubePlayer.OnIniti
 
         switch(v.getId()) {
             case R.id.videoButton1:
-                ytPlayer.loadVideo("lpDIocpW6Nw");
+                ytPlayer.loadVideo("C0DPdy98e4c");
                 break;
             case R.id.videoButton2:
                 ytPlayer.loadVideo("P3MBQciFeHo");
                 break;
             case R.id.videoButton3:
-                ytPlayer.loadVideo("dIe9Zty-sw8");
+                ytPlayer.loadVideo("IvUU8joBb1Q");
                 break;
         }
 

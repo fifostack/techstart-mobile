@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Lucas\Documents\git\techstart-mobile\Android Studio.iml" filepath="C:\Users\Lucas\Documents\git\techstart-mobile\Android Studio.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/techstart-mobile.iml" filepath="$PROJECT_DIR$/techstart-mobile.iml" />
-      <module fileurl="file://D:\Documents\Android Studio\techstart-mobile.iml" filepath="D:\Documents\Android Studio\techstart-mobile.iml" />
     </modules>
   </component>
 </project>

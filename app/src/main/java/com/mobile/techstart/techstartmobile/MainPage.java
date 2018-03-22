@@ -87,7 +87,7 @@ public class MainPage extends AppCompatActivity
 
         user.setText(account.getDisplayName());
         uEmail.setText(account.getEmail());
-        Bitmap iconBMP = null;
+        /*Bitmap iconBMP = null;
         try {
             Uri imageURI = account.getPhotoUrl();
             if(imageURI != null)
@@ -100,7 +100,7 @@ public class MainPage extends AppCompatActivity
         }
         finally {
             profileImage.setImageBitmap(iconBMP);
-        }
+        }*/
 
         logout = new Intent(this, LoginActivity.class);
 
