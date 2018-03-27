@@ -43,7 +43,7 @@ public class MessagesFragment extends Fragment {
     private void initData() {
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
-        getMessages();
+        //getMessages();
 
         /*
             // TODO: grab messages from the DB and populate the lists
@@ -72,7 +72,7 @@ public class MessagesFragment extends Fragment {
         exampleitem2.add("The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start.");
 
         List<String> exampleitem3 = new ArrayList<>();
-        exampleitem3.add(dbString);
+        exampleitem3.add("Testing");
 
         listHash.put(listDataHeader.get(0),exampleitem1);
         listHash.put(listDataHeader.get(1),exampleitem2);

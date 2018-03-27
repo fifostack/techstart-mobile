@@ -7,14 +7,17 @@ import java.util.List;
 class dbManager{
 
     Connection con;
+    String TAG = "dbManager";
 
-
-    public void dbManager()
+    public dbManager()
     {
+        Log.d(TAG, "dbManager: OUTSIDE THE TRY");
         try{
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection( "jdbc:mysql://lucas.lan/tsdb","techstart","techstart"); //here sonoo is database name, root is username and password
+            //Class.forName("com.mysql.jdbc.Driver").newInstance();
+
+            con = DriverManager.getConnection( "jdbc:mysql://192.168.10.160:3306/tsdb","techstart","techstart"); //here sonoo is database name, root is username and password
             Log.d("dbManager", "dbManager: " + con.toString());
+
             //Statement stmt = con.createStatement();
             //ResultSet rs = stmt.executeQuery("SELECT * from emp");
 
@@ -23,7 +26,7 @@ class dbManager{
         }
         catch(Exception e)
         {
-            Log.e("dbManager", "dbManager: PLEASE EAT MY ASS " );
+            e.printStackTrace();
         }
     }
 
