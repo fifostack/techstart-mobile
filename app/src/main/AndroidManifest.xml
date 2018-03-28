@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
+
+        isdfsadfddd<activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"

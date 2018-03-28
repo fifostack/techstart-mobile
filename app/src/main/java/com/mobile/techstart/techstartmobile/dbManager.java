@@ -1,33 +1,44 @@
 package com.mobile.techstart.techstartmobile;
 import android.util.Log;
 
-import java.sql.*;
+import com.mysql.jdbc.CallableStatement;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 class dbManager{
 
-    Connection con;
+    private com.mysql.jdbc.Connection con;
     String TAG = "dbManager";
 
     public dbManager()
     {
         Log.d(TAG, "dbManager: OUTSIDE THE TRY");
         try{
-            //Class.forName("com.mysql.jdbc.Driver").newInstance();
-
-            con = DriverManager.getConnection( "jdbc:mysql://192.168.10.160:3306/tsdb","techstart","techstart"); //here sonoo is database name, root is username and password
-            Log.d("dbManager", "dbManager: " + con.toString());
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://lucas.lan:3306/tsdb", "techstart","techstart");
+            //here tsdb is database name, techstart is username and password
+            Log.d("dbManager", "Connection String: " + con.toString());
 
             //Statement stmt = con.createStatement();
             //ResultSet rs = stmt.executeQuery("SELECT * from emp");
 
             /*while(rs.next())
                 System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));*/
-        }
-        catch(Exception e)
-        {
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
     }
 
     public void submit(String[] studentData)
@@ -37,7 +48,7 @@ class dbManager{
         try
         {
             PreparedStatement subInfo;
-            subInfo = con.prepareStatement("{CALL insertS(?, ?, ?, ?)}" );
+            subInfo = (PreparedStatement) con.prepareStatement("{CALL insertS(?, ?, ?, ?)}" );
             subInfo.setString(1,studentData[0]);
             subInfo.setString(2,studentData[1]);
             subInfo.setString(3,studentData[2]);
@@ -45,7 +56,7 @@ class dbManager{
             subInfo.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.e("dbManager", "dbManager - error in submit method: " + e.toString());
         }
     }
 
@@ -54,29 +65,30 @@ class dbManager{
         try {
             con.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.e("dbManager", "dbManager - error closing connection: " + e.toString());
         }
     }
 
-    public String getAllMessages()
+    public List<String[]> getAllMessages()
     {
-        String result = "";
-        PreparedStatement comm;
+        List<String[]> result = new ArrayList<>();
+        CallableStatement comm;
         try {
-            comm = con.prepareStatement("CALL getM");
+            comm = (CallableStatement) con.prepareCall("{CALL getM}");
+            comm.execute();
             ResultSet rs = comm.getResultSet();
 
-            int title = rs.findColumn("author");
-            int body = rs.findColumn("content");
-
-            while(rs.next())
-            {
-                result += rs.getString(title);
-                result += rs.getString(body);
+            while(rs.next()) {
+                String[] entry = new String[3];
+                entry[0] = rs.getString(1);
+                entry[1] = rs.getString(2);
+                entry[2] = rs.getString(3);
+                result.add(entry);
             }
 
-
+            comm.close();
         } catch (SQLException e) {
+            Log.d("dbManager", "dbManager - error in getAllMessages: " + e.toString());
             e.printStackTrace();
         }
 

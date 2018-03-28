@@ -39,7 +39,9 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     protected void onStart() { //whenever this page is loaded
         super.onStart();
 
+        //--bypass login activity (debugging)--//
         //startActivity(loadMain);
+        //
         signedIn = false;
 
         needLogin = getIntent().getBooleanExtra("NEED_LOGIN",false);

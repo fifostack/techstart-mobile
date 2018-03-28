@@ -3,8 +3,10 @@ package com.mobile.techstart.techstartmobile;
 import android.app.ExpandableListActivity;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Lucas on 2/2/2018.
@@ -26,10 +29,11 @@ public class MessagesFragment extends Fragment {
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listHash;
-    private SearchView search;
-    private dbManager db;
 
-    private String dbString;
+    List<String[]> databaseResult; //full result of the database
+    List<List<String>> messageBodyList;//list of the message bodies (for the list_body)
+
+    private SearchView search;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,34 @@ public class MessagesFragment extends Fragment {
     private void initData() {
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
-        //getMessages();
+        messageBodyList = new ArrayList<>();
+        databaseResult = new ArrayList<>();
+
+        try {
+            new loadMessages().execute(true);
+
+
+
+            Log.e("yea","" + databaseResult.size());
+
+            for (int i = 0; i < databaseResult.size(); i++) {
+
+                listDataHeader.add(databaseResult.get(i)[1]);
+                List<String> temp = new ArrayList<>();
+                temp.add(databaseResult.get(i)[2]);
+                messageBodyList.add(temp);
+                listHash.put(listDataHeader.get(i),messageBodyList.get(i));
+
+                i++;
+            }
+
+        } catch (NullPointerException e) {
+            Log.e("InitData","Null pointer in initData: " + e.toString());
+            e.printStackTrace();
+        }
+
+
+
 
         /*
             // TODO: grab messages from the DB and populate the lists
@@ -61,7 +92,7 @@ public class MessagesFragment extends Fragment {
          */
 
         //begin placeholder list values
-        listDataHeader.add("Important Dates");
+        /*listDataHeader.add("Important Dates");
         listDataHeader.add("Notice to Students");
         listDataHeader.add("Message Test");
 
@@ -76,9 +107,15 @@ public class MessagesFragment extends Fragment {
 
         listHash.put(listDataHeader.get(0),exampleitem1);
         listHash.put(listDataHeader.get(1),exampleitem2);
-        listHash.put(listDataHeader.get(2),exampleitem3);
+        listHash.put(listDataHeader.get(2),exampleitem3);*/
         //end placeholder values
     }
+
+    public void setDatabaseData(List<String[]> db)
+    {
+        databaseResult = db;
+    }
+
 
     @Nullable
     @Override
@@ -94,11 +131,54 @@ public class MessagesFragment extends Fragment {
         return myView;
     }
 
-    public void getMessages()
-    {
-        db = new dbManager();
-        dbString = db.getAllMessages();
-        db.close();
 
+    class loadMessages extends AsyncTask<Boolean, Integer, List<String[]>>
+    {
+        String TAG = "loadMessages";
+        List<String[]> messageData;
+
+        @Override
+        protected List<String[]> doInBackground(Boolean... booleans) {
+
+            try {
+                dbManager db = new dbManager();
+                Log.d(TAG, "Database connection established in message thread" + db.toString());
+                //skips the message grab if the boolean is false (for testing)
+                if (booleans[0]) //if the execute is called with a boolean of true
+                {
+                    Log.d(TAG, "loadMessage called with true flag");
+
+                    messageData = db.getAllMessages();
+                }
+                db.close();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            databaseResult = messageData;
+
+            for (int i = 0; i < databaseResult.size(); i++) {
+
+                listDataHeader.add(databaseResult.get(i)[1]);
+                List<String> temp = new ArrayList<>();
+                temp.add(databaseResult.get(i)[2]);
+                messageBodyList.add(temp);
+                listHash.put(listDataHeader.get(i),messageBodyList.get(i));
+
+                i++;
+            }
+
+            return messageData;
+        }
+
+        @Override
+        protected void onPostExecute(List<String[]> result) {
+            super.onPostExecute(result);
+
+
+        }
     }
+
 }
