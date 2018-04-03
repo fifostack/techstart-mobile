@@ -1,11 +1,13 @@
 package com.mobile.techstart.techstartmobile;
 
+import android.app.Activity;
 import android.app.ExpandableListActivity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.mobile.techstart.techstartmobile.R.id.drawer_layout;
+
 /**
  * Created by Lucas on 2/2/2018.
  */
@@ -28,10 +32,10 @@ public class MessagesFragment extends Fragment {
     private ExpandableListView listView;
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
-    private HashMap<String,List<String>> listHash;
+    private List<String> listDataBody;
 
     List<String[]> databaseResult; //full result of the database
-    List<List<String>> messageBodyList;//list of the message bodies (for the list_body)
+    List<String> messageBodyList;//list of the message bodies (for the list_body)
 
     private SearchView search;
 
@@ -46,18 +50,18 @@ public class MessagesFragment extends Fragment {
 
     private void initData() {
         listDataHeader = new ArrayList<>();
-        listHash = new HashMap<>();
+        listDataBody = new ArrayList<>();
         messageBodyList = new ArrayList<>();
         databaseResult = new ArrayList<>();
 
         try {
-            new loadMessages().execute(true);
+            new loadAllMessages().execute(true);
 
 
 
             Log.e("yea","" + databaseResult.size());
 
-            for (int i = 0; i < databaseResult.size(); i++) {
+            /*for (int i = 0; i < databaseResult.size(); i++) {
 
                 listDataHeader.add(databaseResult.get(i)[1]);
                 List<String> temp = new ArrayList<>();
@@ -66,7 +70,7 @@ public class MessagesFragment extends Fragment {
                 listHash.put(listDataHeader.get(i),messageBodyList.get(i));
 
                 i++;
-            }
+            }*/
 
         } catch (NullPointerException e) {
             Log.e("InitData","Null pointer in initData: " + e.toString());
@@ -91,29 +95,7 @@ public class MessagesFragment extends Fragment {
             }
          */
 
-        //begin placeholder list values
-        /*listDataHeader.add("Important Dates");
-        listDataHeader.add("Notice to Students");
-        listDataHeader.add("Message Test");
 
-        List<String> exampleitem1 = new ArrayList<>();
-        exampleitem1.add("Monday \nTuesday \nWednesday");
-
-        List<String> exampleitem2 = new ArrayList<>();
-        exampleitem2.add("The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start.");
-
-        List<String> exampleitem3 = new ArrayList<>();
-        exampleitem3.add("Testing");
-
-        listHash.put(listDataHeader.get(0),exampleitem1);
-        listHash.put(listDataHeader.get(1),exampleitem2);
-        listHash.put(listDataHeader.get(2),exampleitem3);*/
-        //end placeholder values
-    }
-
-    public void setDatabaseData(List<String[]> db)
-    {
-        databaseResult = db;
     }
 
 
@@ -124,15 +106,66 @@ public class MessagesFragment extends Fragment {
 
         //create and attach ExpandableListAdapter now that the view has been created
         listView = myView.findViewById(R.id.expListView);
-        listAdapter = new ExpandableListAdapter(this.getActivity(),listDataHeader,listHash);
+
+        final Activity myActivity = this.getActivity();
+        listAdapter = new ExpandableListAdapter(myActivity,listDataHeader,listDataBody);
         listView.setAdapter(listAdapter);
         search = myView.findViewById(R.id.searchView);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+
+
+                List<String> searchDataHeader = new ArrayList<>();
+                List<String> searchMessageBody = new ArrayList<>();
+
+
+                for (int i = 0; i < listDataHeader.size(); i++)
+                {
+                    String xHead = listDataHeader.get(i);
+                    String xBody = messageBodyList.get(i);
+
+
+                    if(xHead.toLowerCase().contains(s.toLowerCase()) || xBody.toLowerCase().contains(s.toLowerCase())) //if neither the head or body contain the string
+                    {
+                        searchDataHeader.add(listDataHeader.get(i));
+                        searchMessageBody.add(messageBodyList.get(i));
+                    }
+
+                }
+
+
+                setAdapter(searchDataHeader,searchMessageBody);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+
+                if(s.length() < 1)
+                {
+                    new loadAllMessages().execute(true);
+                }
+
+                return false;
+            }
+        });
 
         return myView;
     }
 
+    public void setAdapter(List<String> headerList, List<String> bodyList)
+    {
+        listAdapter = new ExpandableListAdapter(myView.getContext(),headerList,bodyList);
+        listView.setAdapter(listAdapter); //reset the adapter to show on screen
+    }
 
-    class loadMessages extends AsyncTask<Boolean, Integer, List<String[]>>
+
+    class loadAllMessages extends AsyncTask<Boolean, Integer, List<String[]>>
     {
         String TAG = "loadMessages";
         List<String[]> messageData;
@@ -152,31 +185,53 @@ public class MessagesFragment extends Fragment {
                 }
                 db.close();
             }
-            catch(Exception e)
+            catch(NullPointerException e)
             {
+                View view = myView;
+                Snackbar.make(view,"Unable to establish database connection.", Snackbar.LENGTH_LONG )
+                        .setAction("Action", null).show();
                 e.printStackTrace();
             }
 
-            databaseResult = messageData;
+            databaseResult = messageData; //save to database result (for browsing later)
 
-            for (int i = 0; i < databaseResult.size(); i++) {
 
-                listDataHeader.add(databaseResult.get(i)[1]);
-                List<String> temp = new ArrayList<>();
-                temp.add(databaseResult.get(i)[2]);
-                messageBodyList.add(temp);
-                listHash.put(listDataHeader.get(i),messageBodyList.get(i));
-
-                i++;
-            }
-
-            return messageData;
+            return databaseResult;
         }
+
+
 
         @Override
         protected void onPostExecute(List<String[]> result) {
             super.onPostExecute(result);
 
+            listDataHeader.clear();
+
+            try {
+                for (int i = 0; i < databaseResult.size(); i++) {
+
+                    Log.e(TAG, "" + listDataHeader.size());
+
+
+                    String header = databaseResult.get(i)[1] + "     " + databaseResult.get(i)[3]; //prepare the title box
+                    listDataHeader.add(header); //make author the list_head (for now)
+
+
+                    String temp = databaseResult.get(i)[2];
+                    messageBodyList.add(temp); //add message body to a list
+
+                    Log.e(TAG, "" + messageBodyList.get(i));
+                    listDataBody.add(messageBodyList.get(i)); //add message  body to the body list
+                }
+            }
+            catch(NullPointerException e)
+            {
+                View view = myView;
+                Snackbar.make(view,"Unable to establish database connection.", Snackbar.LENGTH_LONG )
+                        .setAction("Action", null).show();
+            }
+
+            setAdapter(listDataHeader,listDataBody);
 
         }
     }

@@ -2,6 +2,7 @@ package com.mobile.techstart.techstartmobile;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,12 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listDataHeader;
-    private HashMap<String,List<String>> listHashMap;
+    private List<String> listDataBody;
 
-    public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
+    public ExpandableListAdapter(Context context, List<String> listDataHeader, List<String> listHashMap) {
         this.context = context;
         this.listDataHeader = listDataHeader;
-        this.listHashMap = listHashMap;
+        this.listDataBody = listHashMap;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return listHashMap.get(listDataHeader.get(groupPosition)).size();
+        return 1;
     }
 
     @Override
@@ -43,7 +44,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return listHashMap.get(listDataHeader.get(groupPosition)).get(childPosition);
+        Log.e("ExpandableListAdapter",childPosition + "   " + listDataBody.get(childPosition));
+        return listDataBody.get(groupPosition);
     }
 
     @Override
@@ -77,6 +79,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final String childText = (String)getChild(groupPosition,childPosition);
+
         if(convertView == null) {
             LayoutInflater inf = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inf.inflate(R.layout.list_body,null);

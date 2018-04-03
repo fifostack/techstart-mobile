@@ -79,11 +79,13 @@ class dbManager{
             ResultSet rs = comm.getResultSet();
 
             while(rs.next()) {
-                String[] entry = new String[3];
+                String[] entry = new String[4];
                 entry[0] = rs.getString(1);
                 entry[1] = rs.getString(2);
                 entry[2] = rs.getString(3);
+                entry[3] = rs.getString(4);
                 result.add(entry);
+                //Log.d("databasedata",entry[1]);
             }
 
             comm.close();
