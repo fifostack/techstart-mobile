@@ -4,9 +4,10 @@
     android:layout_height="match_parent">
 
     <SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/searchView" />
+        android:queryHint="Search"/>
 
     <ScrollView
         android:layout_width="match_parent"

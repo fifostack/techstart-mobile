@@ -44,7 +44,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        Log.e("ExpandableListAdapter",childPosition + "   " + listDataBody.get(childPosition));
+        //Log.e("ExpandableListAdapter",childPosition + "   " + listDataBody.get(childPosition));
         return listDataBody.get(groupPosition);
     }
 
@@ -66,13 +66,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String)getGroup(groupPosition);
+        String[] splitHeader = headerTitle.split(";");
         if(convertView == null) {
             LayoutInflater inf = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inf.inflate(R.layout.list_head,null);
         }
         TextView lblListHeader = convertView.findViewById(R.id.listHead);
+        TextView lblListDate = convertView.findViewById(R.id.listHead2);
         lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
+        lblListDate.setTypeface(null, Typeface.BOLD);
+        lblListHeader.setText(splitHeader[0]);
+        lblListDate.setText(splitHeader[1]);
         return convertView;
     }
 

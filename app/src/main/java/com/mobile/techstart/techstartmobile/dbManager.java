@@ -57,6 +57,8 @@ class dbManager{
 
         } catch (SQLException e) {
             Log.e("dbManager", "dbManager - error in submit method: " + e.toString());
+        } catch (NullPointerException e) {
+            Log.e("dbManager", "dbManager - error in submit method: " + e.toString());
         }
     }
 
@@ -85,7 +87,6 @@ class dbManager{
                 entry[2] = rs.getString(3);
                 entry[3] = rs.getString(4);
                 result.add(entry);
-                //Log.d("databasedata",entry[1]);
             }
 
             comm.close();
