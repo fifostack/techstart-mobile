@@ -10,7 +10,7 @@
 
     <!-- Settings Menu -->
     <string name="action_logout">Log Out</string>
-    <string name="advanced_settings">Advanced</string>
+    <string name="advanced_settings">Help</string>
 
     <!-- YouTube Strings -->
     <string name="player_error">Error initializing YouTube player: %s</string>

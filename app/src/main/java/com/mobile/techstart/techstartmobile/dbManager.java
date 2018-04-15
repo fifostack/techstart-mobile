@@ -19,7 +19,7 @@ class dbManager{
         Log.d(TAG, "dbManager: OUTSIDE THE TRY");
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://lucas.lan:3306/tsdb", "techstart","techstart");
+            con = (com.mysql.jdbc.Connection) DriverManager.getConnection("jdbc:mysql://173.80.18.23:3306/tsdb", "techstart","techstart");
             //here tsdb is database name, techstart is username and password
             Log.d("dbManager", "Connection String: " + con.toString());
 

@@ -7,7 +7,7 @@
         android:title="@string/action_logout"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_advanced"
+        android:id="@+id/action_help"
         android:orderInCategory="101"
         android:title="@string/advanced_settings"
         app:showAsAction="never" />
