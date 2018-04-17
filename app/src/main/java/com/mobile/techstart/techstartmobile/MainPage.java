@@ -1,12 +1,22 @@
 package com.mobile.techstart.techstartmobile;
 
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.ExponentialBackOff;
+
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +25,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +35,7 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import static com.mobile.techstart.techstartmobile.R.id.action_advanced;
+//import static com.mobile.techstart.techstartmobile.R.id.action_help;
 import static com.mobile.techstart.techstartmobile.R.id.action_logout;
 import static com.mobile.techstart.techstartmobile.R.id.drawer_layout;
 import static com.mobile.techstart.techstartmobile.R.id.nav_about_layout;
@@ -46,8 +54,6 @@ public class MainPage extends AppCompatActivity
 
     @Override
     protected void onStart() {
-
-
         super.onStart();
         logout.putExtra("NEED_LOGIN", false);
     }
@@ -58,16 +64,8 @@ public class MainPage extends AppCompatActivity
         setContentView(R.layout.activity_main_page);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         account = GoogleSignIn.getLastSignedInAccount(this);
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+
 
         //set up navigation drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(drawer_layout);
@@ -86,24 +84,8 @@ public class MainPage extends AppCompatActivity
         TextView user = headerView.findViewById(R.id.usernameText);
         TextView uEmail = headerView.findViewById(R.id.emailText);
         ImageView profileImage = headerView.findViewById(R.id.userImageView);
-
-
         user.setText(account.getDisplayName());
         uEmail.setText(account.getEmail());
-        /*Bitmap iconBMP = null;
-        try {
-            Uri imageURI = account.getPhotoUrl();
-            if(imageURI != null)
-                iconBMP = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageURI);
-        }
-        catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            profileImage.setImageBitmap(iconBMP);
-        }*/
 
 
         logout = new Intent(this, LoginActivity.class);
@@ -164,7 +146,7 @@ public class MainPage extends AppCompatActivity
                 }
             };
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this.getBaseContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure you want to logout? You will need a session ID to login again.").setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener).show();
 
@@ -175,14 +157,25 @@ public class MainPage extends AppCompatActivity
             */
             return true;
         }
-        else if (id == action_advanced) {
+        /*else if (id == action_help) {
 
             View view = findViewById(drawer_layout);
-            Snackbar.make(view,"Bad at video games?", Snackbar.LENGTH_LONG )
-                    .setAction("Action", null).show();
+            //Snackbar.make(view,"Bad at video games?", Snackbar.LENGTH_LONG )
+                    //.setAction("Action", null).show();
+
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setData(Uri.parse("mailto:"));
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, "techstarthelp@gmail.com");
+            if (emailIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            }
+            else
+            {
+                Log.e("Help Button:","Something went wrong.");
+            }
 
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

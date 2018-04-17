@@ -3,11 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/mOutputText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/youtube_fragment"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="8dp"
+        android:text="               " />
+
     <FrameLayout
         android:id="@+id/youtube_fragment"
         android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
         android:layout_width="match_parent"
-        android:layout_height="250dp"></FrameLayout>
+        android:layout_height="250dp">
+
+    </FrameLayout>
 
     <ScrollView
         android:id="@+id/videoScrollView"
@@ -22,24 +34,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/videoButton1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Test Video" />
-
-            <Button
-                android:id="@+id/videoButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Seth Everman" />
-
-
-            <Button
-                android:id="@+id/videoButton3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Video 3" />
 
         </LinearLayout>
     </ScrollView>

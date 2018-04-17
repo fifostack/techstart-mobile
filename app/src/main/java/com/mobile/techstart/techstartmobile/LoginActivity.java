@@ -1,7 +1,9 @@
 package com.mobile.techstart.techstartmobile;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
 
     // UI references.
     private Intent loadMain;
+    private View myView;
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsiClient;
     private GoogleSignInAccount account;
@@ -64,6 +67,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) { //when this activity is first created
         super.onCreate(savedInstanceState);
+        myView = this.findViewById(android.R.id.content).getRootView();
         setContentView(R.layout.activity_login);
         loadMain = new Intent(this, MainPage.class);
         sessionView = (TextView) findViewById(R.id.sessionET);
@@ -78,27 +82,14 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
         gb.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSessionValid())
-                    signIn();
-                else
-                {
-                    sessionView.setError("Invalid Session ID");
-                }
+                new checkSession().execute(); //create a thread to check the session
             }
         });
 
 
     }
 
-    private boolean isSessionValid() {
-        // TODO: replace with session authentication
-        if(sessionView.length() == 8){
-            return true;
-        }
-        else
-            return false;
 
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -141,5 +132,62 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
         Intent signInIntent = gsiClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
+
+    class checkSession extends AsyncTask<String, Integer, Boolean>
+    {
+        String TAG = "checkSession";
+        int status = 0;
+        dbManager db;
+        boolean validSession;
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+
+            try {
+                db = new dbManager();
+                Log.d(TAG, "Database connection established in login thread" + db.toString());
+                Log.d(TAG,"Session code " + sessionView.getText().toString() + "entered.");
+                validSession = db.checkSession(sessionView.getText().toString());
+                db.close();
+            }
+            catch(NullPointerException e)
+            {
+                db.close();
+                View view = myView;
+                Snackbar.make(view,"Unable to establish database connection.", Snackbar.LENGTH_LONG )
+                        .setAction("Action", null).show();
+                status = 1;
+            }
+            catch(Exception e)
+            {
+                db.close();
+                Log.e(TAG, "" + e.toString());
+                status = 1;
+            }
+
+            return validSession;
+        }
+
+
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            if(status == 0 && !result) {
+                View view = myView;
+                Snackbar.make(view, "Invalid or expired session ID", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+            else if(status == 0 && result)
+            {
+                signIn();
+            }
+
+
+        }
+    }
+
 }
 

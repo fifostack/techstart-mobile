@@ -1,10 +1,12 @@
 package com.mobile.techstart.techstartmobile;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,8 @@ public class ProfileFragment extends Fragment {
     private Button toggleModeB;
     private boolean mode; //true if in edit mode
     private GoogleSignInAccount account;
+    DialogInterface.OnClickListener editClickListener;
+    DialogInterface.OnClickListener saveClickListener;
 
     @Nullable
     @Override
@@ -69,6 +73,8 @@ public class ProfileFragment extends Fragment {
 
 
 
+
+
         toggleModeB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,56 +86,103 @@ public class ProfileFragment extends Fragment {
         return myView;
     }
 
+
     private void toggleEditMode() {
+
+        boolean shouldEdit = false;
+        editClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        firstName.setFocusable(true);
+                        firstName.setFocusableInTouchMode(true);
+                        firstName.setClickable(true);
+
+                        lastName.setFocusable(true);
+                        lastName.setFocusableInTouchMode(true);
+                        lastName.setClickable(true);
+
+                        school.setFocusable(true);
+                        school.setFocusableInTouchMode(true);
+                        school.setClickable(true);
+
+                        toggleModeB.setText("Save");
+
+
+                        mode = !mode;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        //nothing to do here
+                        break;
+                }
+            }
+        };
+
+        saveClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        firstName.setFocusable(false);
+                        firstName.setFocusableInTouchMode(false);
+                        firstName.setClickable(false);
+                        //middleName.setFocusable(false);
+                        // middleName.setFocusableInTouchMode(false);
+                        //middleName.setClickable(false);
+                        lastName.setFocusable(false);
+                        lastName.setFocusableInTouchMode(false);
+                        lastName.setClickable(false);
+                        //email.setFocusable(false);
+                        //email.setFocusableInTouchMode(false);
+                        //email.setClickable(false);
+                        school.setFocusable(false);
+                        school.setFocusableInTouchMode(false);
+                        school.setClickable(false);
+
+                        db = new dbManager(); //establish database connection
+                        // TODO: after locking, send data to database
+                        if(formCompleted())
+                        {
+                            sInfo = new String[] {lastName.getText().toString(), firstName.getText().toString(),email.getText().toString(),school.getText().toString()};
+                            new submitInfo().execute(sInfo);
+                        }
+
+
+                        toggleModeB.setText("Edit");
+                        mode = !mode;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        //nothing to do here
+                        break;
+                }
+            }
+        };
+
+
         if(!mode){
-            firstName.setFocusable(true);
-            firstName.setFocusableInTouchMode(true);
-            firstName.setClickable(true);
 
-            lastName.setFocusable(true);
-            lastName.setFocusableInTouchMode(true);
-            lastName.setClickable(true);
-
-            school.setFocusable(true);
-            school.setFocusableInTouchMode(true);
-            school.setClickable(true);
-
-            toggleModeB.setText("Save");
-            //mode = false;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+            builder.setMessage("Faculty will use this information to contact you. Are you sure you want to edit?").setPositiveButton("Yes", editClickListener)
+                    .setNegativeButton("No", editClickListener).show();
 
         }
         else{
 
-            firstName.setFocusable(false);
-            firstName.setFocusableInTouchMode(false);
-            firstName.setClickable(false);
-            //middleName.setFocusable(false);
-           // middleName.setFocusableInTouchMode(false);
-            //middleName.setClickable(false);
-            lastName.setFocusable(false);
-            lastName.setFocusableInTouchMode(false);
-            lastName.setClickable(false);
-            //email.setFocusable(false);
-            //email.setFocusableInTouchMode(false);
-            //email.setClickable(false);
-            school.setFocusable(false);
-            school.setFocusableInTouchMode(false);
-            school.setClickable(false);
-
-            db = new dbManager(); //establish database connection
-            // TODO: after locking, send data to database
-            if(formCompleted())
-            {
-                sInfo = new String[] {lastName.getText().toString(), firstName.getText().toString(),email.getText().toString(),school.getText().toString()};
-                new submitInfo().execute(sInfo);
-            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+            builder.setMessage("Are you sure you would like to submit this data?").setPositiveButton("Yes", saveClickListener)
+                    .setNegativeButton("No", saveClickListener).show();
 
 
-            toggleModeB.setText("Edit");
-            //mode = true;
         }
 
-        mode = !mode;
+
     }
 
     private boolean formCompleted()
