@@ -18,7 +18,7 @@ import android.widget.TextView;
 public class MainFragment extends Fragment {
 
     View myView;
-    TextView home, bookstore;
+    TextView home, bookstore,directory, calendar;
 
     @Nullable
     @Override
@@ -28,14 +28,24 @@ public class MainFragment extends Fragment {
 
         home = myView.findViewById(R.id.homepage);
         bookstore = myView.findViewById(R.id.bookstoreL);
+        directory = myView.findViewById(R.id.directoryL);
+        calendar = myView.findViewById(R.id.calendarL);
         home.setClickable(true);
         bookstore.setClickable(true);
+        directory.setClickable(true);
+        calendar.setClickable(true);
         home.setMovementMethod(LinkMovementMethod.getInstance());
         String t1 = "<a href='https://www.wvutech.edu/'>WVU Tech Homepage</a>";
         bookstore.setMovementMethod(LinkMovementMethod.getInstance());
         String t2 = "<a href='http://wvutech.bncollege.com/webapp/wcs/stores/servlet/BNCBHomePage?storeId=15051&catalogId=10001&langId=-1'>Barnes and Noble at Tech</a>";
+        directory.setMovementMethod(LinkMovementMethod.getInstance());
+        String t3 = "<a href='https://www.wvutech.edu/directory'>Campus Directory</a>";
+        calendar.setMovementMethod(LinkMovementMethod.getInstance());
+        String t4 = "<a href='https://techregistrar.wvutech.edu/academic-calendar'>Acedemic Calendar</a>";
         home.setText(Html.fromHtml(t1));
         bookstore.setText(Html.fromHtml(t2));
+        directory.setText(Html.fromHtml(t3));
+        calendar.setText(Html.fromHtml(t4));
 
         return myView;
     }

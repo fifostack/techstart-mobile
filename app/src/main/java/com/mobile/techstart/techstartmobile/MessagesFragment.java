@@ -213,7 +213,7 @@ public class MessagesFragment extends Fragment {
                     Log.e(TAG, "" + listDataHeader.size());
 
 
-                    String header = databaseResult.get(i)[1] + ";" + databaseResult.get(i)[3]; //prepare the title box
+                    String header = databaseResult.get(i)[4] + ";" + databaseResult.get(i)[3]; //prepare the title box
                     listDataHeader.add(header); //make author the list_head (for now)
 
 

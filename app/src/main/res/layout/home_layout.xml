@@ -32,12 +32,30 @@
         android:text="Barnes and Noble at Tech" />
 
     <TextView
+        android:id="@+id/directoryL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/bookstoreL"
+        android:layout_below="@+id/bookstoreL"
+        android:layout_marginTop="13dp"
+        android:text="Campus Directory" />
+
+    <TextView
+        android:id="@+id/calendarL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/directoryL"
+        android:layout_below="@+id/directoryL"
+        android:layout_marginTop="13dp"
+        android:text="Acedemic Calendar" />
+
+    <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/quickLinks"
         android:layout_marginTop="22dp"
-        android:text="Welcome back to TecStart Mobile!"
+        android:text="Welcome back to TechStart Mobile!"
         android:textSize="18sp" />
 </RelativeLayout>

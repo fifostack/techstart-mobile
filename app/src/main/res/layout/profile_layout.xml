@@ -43,11 +43,10 @@
         android:id="@+id/schoolL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/emailL"
         android:layout_alignStart="@+id/emailTF"
         android:layout_below="@+id/emailTF"
         android:layout_marginTop="5sp"
-        android:text="Counselor ID" />
+        android:text="Counselor ID Number" />
 
     <EditText
         android:id="@+id/firstTF"
@@ -88,7 +87,7 @@
         android:layout_below="@+id/schoolL"
         android:width="300sp"
         android:ems="10"
-        android:hint="Ex; 04"
+        android:hint="004"
         android:inputType="none|textPersonName" />
 
 </RelativeLayout>

@@ -51,6 +51,8 @@ public class MainPage extends AppCompatActivity
     Toolbar toolbar;
     GoogleSignInAccount account;
     Intent logout;
+    public FragmentManager fragMan;
+
 
     @Override
     protected void onStart() {
@@ -90,7 +92,7 @@ public class MainPage extends AppCompatActivity
 
         logout = new Intent(this, LoginActivity.class);
 
-        FragmentManager fragMan = getFragmentManager();
+        fragMan = getFragmentManager();
         toolbar.setTitle("TechStart Mobile");
         fragMan.beginTransaction()
                 .replace(R.id.content_frame, new MainFragment())
@@ -151,10 +153,6 @@ public class MainPage extends AppCompatActivity
                     .setNegativeButton("No", dialogClickListener).show();
 
 
-
-            /*Snackbar.make(view,"What's the matter little fella?", Snackbar.LENGTH_LONG )
-            .setAction("Action", null).show();
-            */
             return true;
         }
         /*else if (id == action_help) {
@@ -185,7 +183,7 @@ public class MainPage extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentManager fragMan = getFragmentManager();
+        fragMan = getFragmentManager();
 
         if (id == nav_home) {
             toolbar.setTitle("TechStart Mobile");
@@ -218,6 +216,11 @@ public class MainPage extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public FragmentManager getFragMan()
+    {
+        return fragMan;
     }
 
 }

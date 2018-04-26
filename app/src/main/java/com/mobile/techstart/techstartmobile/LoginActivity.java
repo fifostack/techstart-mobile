@@ -177,8 +177,7 @@ public class LoginActivity extends AppCompatActivity /*implements LoaderCallback
 
             if(status == 0 && !result) {
                 View view = myView;
-                Snackbar.make(view, "Invalid or expired session ID", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                sessionView.setError("Invalid or expired session ID");
             }
             else if(status == 0 && result)
             {
