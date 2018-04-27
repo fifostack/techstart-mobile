@@ -114,7 +114,7 @@ public class TutorialsFragment extends Fragment implements YouTubePlayer.OnIniti
 
 
         vbLayout = myView.findViewById(R.id.videoButtonLayout);
-        mOutputText = myView.findViewById(R.id.mOutputText);
+        //mOutputText = myView.findViewById(R.id.mOutputText);
 
 
 
@@ -123,10 +123,9 @@ public class TutorialsFragment extends Fragment implements YouTubePlayer.OnIniti
         fragmentTransaction.replace(R.id.youtube_fragment, youtubePlayerFragment);
         fragmentTransaction.commit();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mCredential = GoogleAccountCredential.usingOAuth2( getContext(), Arrays.asList(SCOPES))
-                    .setBackOff(new ExponentialBackOff());
-        }
+        mCredential = GoogleAccountCredential.usingOAuth2( getActivity(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
+
 
         mProgress = new ProgressDialog(myView.getContext());
         mProgress.setMessage("Calling YouTube Data API ...");
@@ -401,7 +400,7 @@ public class TutorialsFragment extends Fragment implements YouTubePlayer.OnIniti
 
         @Override
         protected void onPreExecute() {
-            mOutputText.setText("");
+            //mOutputText.setText("");
             mProgress.show();
         }
 

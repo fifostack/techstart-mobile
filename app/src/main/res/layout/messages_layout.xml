@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:queryHint="Search"/>
+        android:layout_height="50sp"
+        android:queryHint="Search" />
 
     <ScrollView
+        style="@android:style/Widget.DeviceDefault.ScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp">
+        android:fillViewport="true"
+        android:isScrollContainer="true"
+        android:scrollbarAlwaysDrawVerticalTrack="false">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
             android:layout_marginTop="0dp"
             android:orientation="vertical">
 
             <ExpandableListView
                 android:id="@+id/expListView"
                 android:layout_width="match_parent"
-                android:layout_height="600sp"
-                android:layout_alignParentStart="true"
+                android:layout_height="match_parent"
                 android:layout_marginTop="0dp"
                 android:paddingTop="0dp" />
-        </LinearLayout>
+
+        </RelativeLayout>
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

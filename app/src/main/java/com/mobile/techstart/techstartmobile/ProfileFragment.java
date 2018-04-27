@@ -214,7 +214,7 @@ public class ProfileFragment extends Fragment {
             email.setError(" ");
             valid = false;
         }
-        if(school.getText().length() > 1)
+        if(school.getText().length() >= 1)
         {
             try {
                 Integer.parseInt(school.getText().toString());

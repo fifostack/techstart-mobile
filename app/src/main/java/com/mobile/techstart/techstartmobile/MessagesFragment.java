@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class MessagesFragment extends Fragment {
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
     private List<String> listDataBody;
+    private ScrollView mScrollView;
 
     List<String[]> databaseResult; //full result of the database
     List<String> messageBodyList;//list of the message bodies (for the list_body)
@@ -149,6 +153,7 @@ public class MessagesFragment extends Fragment {
                 if(s.length() < 1)
                 {
                     new loadAllMessages().execute(true);
+
                 }
 
                 return false;
@@ -232,6 +237,7 @@ public class MessagesFragment extends Fragment {
             }
 
             setAdapter(listDataHeader,listDataBody);
+
 
         }
     }
